@@ -72,30 +72,24 @@ float dot( coordinate a,  coordinate b);
 int main(int argc, const char * argv[]) {
     // insert code here...
 	std::string filename = "polyline.csv";
-	std::vector<coordinate> C=read_record_Polyline(filename);
+	std::vector<coordinate> C=read_record_Polyline(filename); //The polyline described in 2, contained in “polyline.csv”
 	
 	filename = "TIN Model Road Surface.csv";
+  // T Any triangle on the road surface as described in 1, contained in TIN Model Road
 	std::vector< Triangle>  T=read_record_Road_Surface(filename);
 	
-// A The position of the driver’s eyes.
-// B Be an object on the road which the driver must be able to see.
-// AB The distance from A to B, along the polyline C
-// L The Sight line, so a straight line between A and B
-
-// T Any triangle on the road surface as described in 1, contained in TIN Model Road
-// Surface.csv”
 
 
 	// Let A follow the polyline, so iterate through the vertices of C, starting at S
 	//  the driver can see <=350m 
 	float Max_A_Dirver_Can_See=350;
 	for (int i=0;i<C.size();i++){
-		coordinate A=C[i];
+		coordinate A=C[i]; // A The position of the driver’s eyes.
 		int j=i; // B starts at A
 		for (int j=i ;j <C.size();j++)
 		{
-			coordinate B=C[j]; 
-			float AB=distance(A.x,A.y,A.z,B.x,B.y,B.z);
+			coordinate B=C[j];  // B Be an object on the road which the driver must be able to see.
+			float AB=distance(A.x,A.y,A.z,B.x,B.y,B.z);   // AB The distance from A to B, along the polyline C
 			if (AB>Max_A_Dirver_Can_See)  // if B exceeds 350m, check the intersection 
 			{	int numHit = 0;
 				// define a Ray or sight line between A and B here
